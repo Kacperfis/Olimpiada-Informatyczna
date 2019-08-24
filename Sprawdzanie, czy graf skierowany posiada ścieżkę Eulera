@@ -1,0 +1,233 @@
+#include <iostream>
+#include <list>
+#include <vector>
+
+using namespace std;
+
+list<int>lista;
+list<int>lista_SCC;
+
+void DFS_VISIT(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time);
+void DFS_VISIT_SCC(int v, list<int> tab2[], int n, int color2[], int d2[], int f2[], int pi2[], int time2);
+
+
+void DFS(list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time)
+{
+    for(int i = 1; i < n; i++)
+    {
+        if(color[i] == 0)
+        {
+            DFS_VISIT(i, tab, n, color, d, f, pi, time);
+        }
+    }
+}
+
+void DFS_VISIT(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time)
+{
+    list<int>::iterator it;
+
+    color[v] = 1;
+    time = time + 1;
+    d[v] = time;
+
+    for(it = tab[v].begin(); it != tab[v].end(); it++)
+    {
+        if(color[*it] == 0)
+        {
+            pi[*it] = v;
+            DFS_VISIT(*it, tab, n, color, d, f, pi, time);
+        }
+    }
+
+    color[v] = 2;
+    time = time + 1;
+    f[v] = time;
+    lista.push_front(v);
+}
+
+void DFS_SCC(list<int> tab2[], int n, int color2[], int d2[], int f2[], int pi2[], int time2)
+{
+    list<int>::iterator it;
+    list<int>::iterator j;
+
+    for(it = lista.begin(); it != lista.end(); it++)
+    {
+        if(color2[*it] == 0)
+        {
+            if(lista_SCC.size() > 0)
+            {
+                break;
+            }
+            DFS_VISIT_SCC(*it, tab2, n, color2, d2, f2, pi2, time2);
+        }
+    }
+}
+
+void DFS_VISIT_SCC(int v, list<int> tab2[], int n, int color2[], int d2[], int f2[], int pi2[], int time2)
+{
+    list<int>::iterator it;
+
+    color2[v] = 1;
+    time2 = time2 + 1;
+    d2[v] = time2;
+
+    for(it = tab2[v].begin(); it != tab2[v].end(); it++)
+    {
+        if(color2[*it] == 0)
+        {
+            pi2[*it] = v;
+            DFS_VISIT_SCC(*it, tab2, n, color2, d2, f2, pi2, time2);
+        }
+    }
+
+    color2[v] = 2;
+    time2 = time2 + 1;
+    f2[v] = time2;
+    lista_SCC.push_front(v);
+}
+
+int main()
+{
+    int n, m, v1 ,v2;
+    cin >> n >> m;
+
+    n+=1;
+    m+=1;
+
+    list<int> *tab = new list<int>[n];
+    list<int> *tab2 = new list<int>[n];
+
+    for(int i = 1; i < m; i++)
+    {
+        cin >> v1 >> v2;
+        tab[v1].push_back(v2);
+        tab2[v2].push_back(v1);
+    }
+
+    int *color = new int[n];
+    int *d = new int[n];
+    int *f = new int[n];
+    int *pi = new int[n];
+    int time = 0;
+
+    int *color2 = new int[n];
+    int *d2 = new int[n];
+    int *f2 = new int[n];
+    int *pi2 = new int[n];
+    int time2 = 0;
+
+    for(int i = 1; i < n; i++)
+    {
+        color[i] = 0;
+        d[i] = 0;
+        f[i] = 0;
+        pi[i] = 0;
+
+        color2[i] = 0;
+        d2[i] = 0;
+        f2[i] = 0;
+        pi2[i] = 0;
+    }
+
+    DFS(tab, n, color, d, f, pi, time);
+    DFS_SCC(tab2, n, color2, d2, f2, pi2, time2);
+
+    list<int>::iterator it;
+    list<int>::iterator j;
+
+    int *licznik_1 = new int[n]; //stopien wychodzšcy
+    int *licznik_2 = new int[n]; //stopien wchodzšcy
+    int counter_1 = 0;
+    int counter_2 = 0;
+    int upper = 0;
+
+    for(int i = 1; i < n; i++)
+    {
+        licznik_1[i] = 0;
+        licznik_2[i] = 0;
+    }
+
+    //zliczanie stopnia wychodzšcego
+    for(int i = 1; i < n; i++)
+    {
+        for(it = tab[i].begin(); it != tab[i].end(); it++)
+        {
+            licznik_1[i]++;
+        }
+    }
+
+    //zliczanie stopnia wchodzšcego
+
+    for(int i = 1; i < n; i++)
+    {
+        for(it = tab[i].begin(); it != tab[i].end(); it++)
+        {
+            for(int j = 1; j < n; j++)
+            {
+                if(*it == j)
+                    licznik_2[j]++;
+            }
+        }
+    }
+
+    //odejmowanie wychodzšcy - wchodzšcy
+
+    for(int i = 1; i < n; i++)
+    {
+        if((licznik_1[i] - licznik_2[i]) == 1)
+            counter_1++;
+        if((licznik_2[i] - licznik_1[i] == 1))
+            counter_2++;
+        if(licznik_1[i] == licznik_2[i])
+            upper++;
+    }
+
+    if(counter_1 && counter_2 == 1)
+    {
+        if(upper == (n - 3))
+        {
+            //sprawdzanie SCC
+            bool *check = new bool[n];
+            bool confirm = true;
+            for(int i = 1; i < n; i++)
+            {
+                check[i] = false;
+            }
+
+            for(int i = 1; i < n; i++)
+            {
+                for(it = lista_SCC.begin(); it != lista_SCC.end(); it++)
+                {
+                    if(tab[i].size() != 0)
+                    {
+                        if(*it == i)
+                        {
+                            check[i] = true;
+                        }
+                    }
+
+                }
+            }
+
+
+            for(int i = 1; i < n; i++)
+            {
+                if(check[i] != true)
+                {
+                    confirm = false;
+                }
+            }
+
+            if(confirm == true)
+            {
+                cout << "graf ma sciezke eulera";
+            }
+            else cout << "1, graf nie ma sciezki eulera";
+        }
+        else cout << "2, graf nie ma sciezki eulera";
+    }
+    else cout << "3, graf nie ma sciezki eulera";
+
+
+    return 0;
+}
