@@ -1,0 +1,216 @@
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+list<int> lista;
+list<int> lista_SCC;
+
+void DFS_VISIT(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time);
+void DFS_VISIT_SCC(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time);
+
+void DFS(list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time)
+{
+    for(int i = 1;i < n; i++)
+    {
+        if(color[i] == 0)
+        {
+            DFS_VISIT(i, tab, n, color, d, f, pi, time);
+        }
+    }
+}
+void DFS_VISIT(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time)
+{
+    list<int>::iterator it;
+
+    color[v] = 1;
+    time = time + 1;
+    d[v] = time;
+
+    for(it = tab[v].begin(); it != tab[v].end(); it++)
+    {
+        if(color[*it] == 0)
+        {
+            pi[*it] = v;
+            DFS_VISIT(*it, tab, n, color, d, f, pi, time);
+        }
+    }
+
+    color[v] = 2;
+    time = time + 1;
+    f[v] = time;
+    lista.push_front(v);
+}
+
+void DFS_SCC(list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time)
+{
+    list<int>::iterator it;
+    list<int>::iterator j;
+    for(it = lista.begin(); it != lista.end(); it++)
+    {
+        if(lista_SCC.size() != 0)
+        {
+            break;
+        }
+        if(color[*it] == 0)
+        {
+            DFS_VISIT_SCC(*it, tab, n, color, d, f, pi, time);
+        }
+    }
+}
+
+void DFS_VISIT_SCC(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time)
+{
+    list<int>::iterator it;
+
+    color[v] = 1;
+    time = time + 1;
+    d[v] = time;
+
+    for(it = tab[v].begin(); it != tab[v].end(); it++)
+    {
+        if(color[*it] == 0)
+        {
+            pi[*it] = v;
+            DFS_VISIT_SCC(*it, tab, n, color, d, f, pi, time);
+        }
+    }
+
+    color[v] = 2;
+    time = time + 1;
+    f[v] = time;
+    lista_SCC.push_front(v);
+}
+int main()
+{
+    int n, m, v1, v2;
+
+    cin >> n >> m;
+
+    n+=1;
+    m+=1;
+
+    list<int> *tab = new list<int>[n];
+    list<int> *tab2 = new list<int>[n];
+    list<int>::iterator it;
+    list<int>::iterator j;
+
+    for(int i = 1 ;i < m; i++)
+    {
+        cin >> v1 >> v2;
+        tab[v1].push_back(v2);
+        tab2[v2].push_back(v1);
+    }
+        int *licznik_1 = new int[n];
+        int *licznik_2 = new int[n];
+
+        for(int i = 1; i < n; i++)
+        {
+            licznik_1[i] = 0;
+            licznik_2[i] = 0;
+        }
+        //zliczanie stopni wychodzšcych wierzcholków
+        
+        for(int i = 1; i < n; i++)
+        {
+            for(it = tab[i].begin(); it != tab[i].end(); it++)
+            {
+                licznik_1[i]++;
+            }
+        }
+
+        //zliczanie stopni wchodzacych wierzcholków
+
+        for(int j = 1; j < n; j++)
+        {
+            for(it = tab[j].begin(); it != tab[j].end(); it++)
+            {
+                for(int i = 1; i < n; i++)
+                {
+                    if(*it == i)
+                        licznik_2[i]++;
+                }
+            }
+        }
+
+        bool confirm = true;
+
+        for(int i = 1; i < n; i++)
+        {
+            if(licznik_1[i] != licznik_2[i])
+            {
+                confirm = false;
+                break;
+            }
+        }
+
+        if(confirm == true)
+        {
+            int *color = new int[n];
+            int *d = new int[n];
+            int *f = new int[n];
+            int *pi = new int[n];
+            int time = 0;
+
+            int *color2 = new int[n];
+            int *d2 = new int[n];
+            int *f2 = new int[n];
+            int *pi2 = new int[n];
+            int time2 = 0;
+
+            for(int i = 1;i < n; i++)
+            {
+                color[i] = 0;
+                d[i] = 0;
+                f[i] = 0;
+                pi[i] = 0;
+                color2[i] = 0;
+                d2[i] = 0;
+                f2[i] = 0;
+                pi2[i] = 0;
+            }
+
+            DFS(tab, n, color, d, f, pi, time);
+            DFS_SCC(tab2, n, color2, d2, f2, pi2, time2);
+
+            //sprawdzanie SSC
+                
+            bool *check_2 = new bool[n];
+            bool confirm_2 = true;
+            for(int i = 1; i < n; i++)
+            {
+                check_2[i] = false;
+            }
+
+            for(int i = 1; i < n; i++)
+            {
+                if(tab[i].size() != 0)
+                {
+                   for(it = lista_SCC.begin(); it != lista_SCC.end(); it++)
+                   {
+                        if(*it == i)
+                        {
+                            check_2[i] = true;
+                        }
+                   }
+                }
+            }
+
+            for(int i = 1; i < n; i++)
+            {
+                if(check_2[i] != true)
+                {
+                    confirm_2 = false;
+                }
+            }
+
+            if(confirm_2 == true)
+            {
+                cout << "graf ma cykl eulera";
+            }
+            else cout << "graf nie ma cyklu eulera";
+        }
+        else cout << "graf nie ma cyklu eulera";
+
+    return 0;
+}
