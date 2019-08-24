@@ -1,0 +1,109 @@
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+int licznik;
+
+void DFS_VISIT(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time, bool confirm);
+
+void DFS(list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time, bool confirm)
+{
+    for(int i = 1; i < n; i++)
+    {
+        if(color[i] == 0)
+        {
+            DFS_VISIT(i, tab, n, color, d, f, pi, time, confirm);
+        }
+    }
+}
+
+void DFS_VISIT(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int time, bool confirm)
+{
+    list<int>::iterator it;
+
+    color[v] = 1;
+    time = time + 1;
+    d[v] = time;
+
+    if(tab[v].size() == 0)
+        confirm = true;
+
+    if((tab[v].size() % 2) == 1)
+    {
+        licznik++;
+    }
+
+
+    for(it = tab[v].begin(); it != tab[v].end(); it++)
+    {
+        if(color[*it] == 0)
+        {
+            pi[*it] = v;
+            DFS_VISIT(*it, tab, n, color, d, f, pi, time, confirm);
+        }
+    }
+
+    color[v] = 2;
+    time = time + 1;
+    f[v] = time;
+}
+
+int main()
+{
+    int n, m, v1, v2;
+
+    cin >> n >> m;
+
+    n+=1;
+    m+=1;
+
+    list<int> *tab = new list<int>[n];
+
+    for(int i = 1; i < m ;i++)
+    {
+        cin >> v1 >> v2;
+        tab[v1].push_back(v2);
+        tab[v2].push_back(v1);
+    }
+
+    int *color = new int[n];
+    int *d = new int[n];
+    int *f = new int[n];
+    int *pi = new int[n];
+    int time = 0;
+
+    for(int i = 1; i < n; i++)
+    {
+        color[i] = 0;
+        d[i] = 0;
+        f[i] = 0;
+        pi[i] = 0;
+    }
+
+    bool confirm = false;
+
+    DFS(tab, n, color, d, f, pi, time, confirm);
+
+    if(confirm == true)
+    {
+        cout << "Graf nie zawiera sciezki, lub cyklu eulera";
+    }
+    else
+    {
+        if(licznik == 2)
+            cout << "Graf zawiera sciezke Eulera, lecz nie zawiera cyklu Eulera";
+        else if(licznik == 0)
+            cout << "Graf zawiera cykl Eulera";
+        else if(licznik > 0 && licznik != 2)
+            cout << "Graf nie zawiera sciezki lub cyklu Eulera";
+    }
+
+    delete [] color;
+    delete [] d;
+    delete [] f;
+    delete [] pi;
+    delete [] tab;
+
+    return 0;
+}
