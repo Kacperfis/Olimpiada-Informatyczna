@@ -1,6 +1,5 @@
 /*																													   //
- Templatka c++ Kacper Fis Š																							   //
- Zad: 																												   //
+ Templatka c++ Kacper Fis																							   //																												   //
 */																													   //
 																													   //
 #include <iostream>       // 10 Przykazan programisty:																   //	
@@ -13,7 +12,7 @@
 #include <list>           // 7. po 1.5h zrob sobie 5 min przerwy													   //
 #include <vector>         // 8. jesli masz rozwiazanie napisz do niego dokladne testy								   //
 #include <map>            // 9. jesli nie mozesz znalezc rozwiazania, to przypomnij sobie przerabiane algorytmy		   //
-#include <set>            //10. Optymalizuj rozwišzanie(!)															   //
+#include <set>            //10. Optymalizuj rozwiazanie(!)															   //
 #include <queue>          																							   //
 #include <deque>          																							   //
 #include <stack>																									   //
@@ -46,8 +45,7 @@ vector<int>::iterator it3;																							   //
 set<int>::iterator it4;																								   //
 map<string, int>::iterator it5; 																					   //
 vector<ii>::iterator iter;																							   //
-																													   //
-#define size(x) ((int)(x).size())																					   //
+																													   //																				   //
 #define print_list(x) for(it = (x).begin(); it != (x).end(); it++) {cout << *it << " ";}							   //
 #define print_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++) {cout << *it2 << " ";}						   //
 #define search_list(x) for(it = (x).begin(); it != (x).end(); it++)													   //
@@ -64,7 +62,7 @@ vector<ii>::iterator iter;																							   //
 
 
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
-int main()																											   //
+int main(int argc, char* argv[])																					   //
 {ios_base::sync_with_stdio(false); cin.tie(NULL);                  												       //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
