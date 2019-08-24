@@ -1,0 +1,262 @@
+//ZNAJDOWANIE SCIEZKI W GRAFIE EULEROWSKIM - KACPER FIS
+
+#include <iostream>
+#include <list>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void DFS_VISIT(int v, list<int>tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time);
+void LOW(int v, list<int>tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time);
+
+void DFS(list<int>tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time)
+{
+    for(int i = 1; i < n; i++)
+    {
+        if(color[i] == 0)
+        {
+            DFS_VISIT(i, tab, n, color, d, f, pi, low, time);
+        }
+    }
+}
+
+void DFS_VISIT(int v, list<int>tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time)
+{
+    list<int>::iterator it;
+
+    color[v] = 1;
+    time = time + 1;
+    d[v] = time;
+
+    for(it = tab[v].begin(); it != tab[v].end(); it++)
+    {
+        if(color[*it] == 0)
+        {
+            pi[*it] = v;
+            DFS_VISIT(*it, tab, n, color, d, f, pi, low, time);
+        }
+    }
+
+    color[v] = 2;
+    time = time + 1;
+    f[v] = time;
+    LOW(v, tab, n, color, d, f, pi, low, time);
+}
+void LOW(int v, list<int>tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time)
+{
+    vector<int> V;
+    vector<int> low2;
+    vector<int> low3;
+    vector<int> Parents;
+    vector<int>::iterator it2;
+    list<int>::iterator it;
+
+    V.push_back(d[v]);
+
+    for(it = tab[v].begin(); it != tab[v].end(); it++)
+    {
+        if(*it != pi[v])
+            low3.push_back(d[*it]);
+    }
+
+    if(low3.size() != 0)
+    {
+        sort(low3.begin(), low3.end());
+        V.push_back(*low3.begin());
+    }
+
+    for(int i = 1; i < n; i++)
+    {
+        if(pi[i] == v)
+            Parents.push_back(i);
+    }
+
+    for(it2 = Parents.begin(); it2 != Parents.end(); it2++)
+    {
+        if(low[*it2] != 0)
+        {
+            low2.push_back(low[*it2]);
+        }
+    }
+
+    if(low2.size() != 0)
+    {
+        sort(low2.begin(), low2.end());
+        V.push_back(*low2.begin());
+    }
+
+    sort(V.begin(), V.end());
+    low[v] = *V.begin();
+
+    V.clear();
+    low2.clear();
+    low3.clear();
+    Parents.clear();
+}
+
+bool IS_BRIDGE(list<int> tab[], int n, int licznik, int wsk)
+{
+    int *color = new int[n];
+    int *d = new int[n];
+    int *f = new int[n];
+    int *pi = new int[n];
+    int *low = new int[n];
+    int time = 0;
+
+    for(int i = 1; i < n; i++)
+    {
+        color[i] = 0;
+        d[i] = 0;
+        f[i] = 0;
+        pi[i]= 0;
+        low[i] = 0;
+    }
+
+    DFS(tab, n, color, d, f, pi, low, time);
+
+    bool check_1 = false;
+    bool check_2 = false;
+
+    vector<int> bridge_first;
+    vector<int> bridge_second;
+    vector<int>::iterator it2;
+
+    for(int i = 2; i < n; i++)
+    {
+        if(low[i] == d[i])
+        {
+            if((pi[i] && i) > 0)
+            {
+                bridge_first.push_back(i);
+                bridge_second.push_back(pi[i]);
+            }
+        }
+    }
+
+    for(it2 = bridge_first.begin(); it2 != bridge_first.end(); it2++)
+    {
+        if(*it2 == licznik)
+        {
+            check_1 = true;
+            break;
+        }
+        else continue;
+    }
+
+    for(it2 = bridge_second.begin(); it2 != bridge_second.end(); it2++)
+    {
+        if(*it2 == wsk)
+        {
+            check_2 = true;
+            break;
+        }
+        else continue;
+    }
+
+    if((check_1 == true) && (check_2 == true))
+        return true;
+    else return false;
+
+    delete [] color;
+    delete [] d;
+    delete [] f;
+    delete [] pi;
+    delete [] low;
+    delete [] tab;
+}
+
+bool nodes(list<int> tab[], int n)
+{
+    bool confirm = false;
+    for(int i = 1; i < n; i++)
+    {
+        if(tab[i].size() != 0)
+        {
+            confirm = true;
+            break;
+        }
+        else continue;
+    }
+
+    if(confirm == true)
+        return true;
+    else return false;
+
+}
+
+int main()
+{
+        int n, m, v1, v2;
+        cin >> n >> m;
+        n+=1;
+        m+=1;
+
+        list<int> *tab = new list<int>[n];
+        list<int>::iterator it;
+        vector<int>::iterator it2;
+
+        for(int i = 1; i < m; i++)
+        {
+            cin >> v1 >> v2;
+            tab[v1].push_back(v2);
+            tab[v2].push_back(v1);
+        }
+
+        int i = 1;
+        int licznik;
+        list<int> Vertices;
+        list<int>::iterator j;
+        bool confirm = false;
+
+        while(confirm == false)
+        {
+            if(tab[i].size() % 2 == 1)
+            {
+                licznik = i;
+                confirm = true;
+                break;
+            }
+            else if(tab[i].size() % 2 != 1)
+            {
+               i++;
+            }
+        }
+
+       while(nodes(tab, n))
+        {
+            for(it = tab[licznik].begin(); it != tab[licznik].end(); it++)
+            {
+                if(IS_BRIDGE(tab, n, licznik, *it) == 0)
+                {
+                    Vertices.push_front(licznik);
+                    tab[licznik].remove(*it);
+                    tab[*it].remove(licznik);
+                    licznik = *it;
+                    break;
+                }
+                else if(IS_BRIDGE(tab, n, licznik, *it) == 1 && tab[licznik].size() == 1)
+                {
+                    Vertices.push_front(licznik);
+                    tab[licznik].remove(*it);
+                    tab[*it].remove(licznik);
+                    licznik = *it;
+                    break;
+                }
+                else if(IS_BRIDGE(tab, n, licznik, *it) == 1 && tab[licznik].size() > 1)
+                {
+                    continue;
+                }
+            }
+       }
+        Vertices.push_front(licznik);
+        Vertices.reverse();
+        cout << "eulers path: " << endl;
+        for(it = Vertices.begin(); it != Vertices.end(); it++)
+        {
+            cout << *it << " ";
+        }
+
+    return 0;
+}
+
