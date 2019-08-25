@@ -1,0 +1,26 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include <set>
+
+using namespace std;
+
+int rand(int a, int b)
+{
+    return a + rand() % (b - a + 1);
+}
+
+int main(int argc, char* argv[]) {
+    srand(atoi(argv[1]));
+    int n = rand(1, 100);  //Pula liczb do losowania //będą to liczby od 1 do 100
+    cout << "n: " << n << endl;
+    set<int> used;
+    for(int i = 0; i < n; ++i) {
+        int x;
+        do {
+            x = rand(1, 100);  //zakres ilosci liczb do wylosowania, liczb wylosowanych będzie ilosciowo od 1 do 100
+        } while(used.count(x));
+        cout << x << " ";
+        used.insert(x);
+    }
+    puts("");
+}
