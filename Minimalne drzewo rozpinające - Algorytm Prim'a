@@ -84,7 +84,6 @@ void Prim(int root)
 			
 			if(!QS[v] && d[v] > wt)
 			{
-				total_wt += wt;
 				d[v] = wt;
 				p[v] = u;
 				Q.push(mp(d[v], v));
@@ -121,6 +120,7 @@ int main(int argc, char* argv[])																					   //
 	for(int i = 1; i < n; i++)
 	{
 		cout << p[i] << "->" << i << ": " << d[i] << endl;
+		total_wt += d[i];
 	}
 	
 	cout << "total weight: " << total_wt << endl;
