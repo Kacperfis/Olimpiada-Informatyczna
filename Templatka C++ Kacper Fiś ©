@@ -26,7 +26,7 @@
 																													   
 using namespace std; 																								   
 																													   
-const int INF =  1000000001;																						   
+const int INF = 1000000001;																						   
 const float PI = 3.14;																								   
 typedef long long LL;																								   
 																													   
