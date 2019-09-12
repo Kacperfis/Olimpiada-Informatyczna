@@ -56,7 +56,9 @@ vector<ii>::iterator iter;
 ///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
 
 
+
 ///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
+
 
 
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
@@ -64,22 +66,35 @@ int main(int argc, char* argv[])
 {ios_base::sync_with_stdio(false); cin.tie(NULL);                  												       
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-	string s;
-	cin >> s;
+	string s, p;
+	cin >> p; //wczytanie wyrazu
 	
-	int PI[s.length()], i, b;
-	PI[0] = -1;
+	int m = p.length();
+	
+	int KMPNext[m];
+	int b;
+	
+	KMPNext[0] = -1;
 	b = -1;
-    
-    for(i = 1; i <= s.length(); i++)
-    {
-		while((b > -1) && (s[b] != s[i - 1]))
+	
+	//wyszukiwanie prefikso-sufiksów
+	for(int i = 1; i <= m; i++)
+	{
+		while((b > -1) && (p[b] != p[i-1]))
 		{
-			b = PI[b];
+			b = KMPNext[b];
 		}
-		PI[i] = ++b;
+		KMPNext[i] = ++b;
 	}
-	cout << b << endl;
+	
+	//wyswietlenie tablicy prefikso-sufiksów
+	for(int i = 1; i <= m; i++)
+    {
+		cout << KMPNext[i] << " ";
+	}
+	//najdluzszy prefikso-sufix
+	cout << endl << "longest pref-suf: " << b << endl;
 	
 	return 0;
 }
+
