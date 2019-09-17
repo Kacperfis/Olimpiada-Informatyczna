@@ -1,0 +1,172 @@
+/*																													   
+ Templatka c++ Kacper Fis																							   																											   //
+*/																													  
+																													   
+#include <iostream>       	
+#include <cstdio>         
+#include <limits>		  
+#include <cstdlib>       
+#include <utility>        
+#include <iterator>       
+#include <bitset>         
+#include <list>           
+#include <vector>         
+#include <map>            
+#include <set>            														   
+#include <queue>          																							   
+#include <deque>          																							   
+#include <stack>																									   
+#include <algorithm>																								   
+#include <cmath>																									   
+#include <string>      																								   
+#include <time.h>																									   
+#include <iomanip> 																									   
+#include <sstream>																									   
+#include <bits/stdc++.h>																							   
+																													   
+using namespace std; 																								   
+																													   
+const int INF = 1000000001;																						   
+const float PI = 3.14;																								   
+typedef long long LL;																								   
+																													   
+typedef vector<int> vi;																								   
+typedef list<int> li;																								   
+typedef queue<int> qi; 																								   
+typedef pair<int,int> ii; 																							   
+typedef map<string,int> msi; //np msi['nazwa'] = 'liczba'															   
+typedef vector<ii> vii; //vector par<int>, do tworzenia tablicy dla grafów wagowych #dijkstra #Bellman_Ford			   
+typedef priority_queue< ii, vector<ii>, greater<ii> > pq; //kolejka priorytetowa vectorów par(top()=min) #dijkstra	   
+																													   
+list<int>::iterator it;																								   
+list<int>::iterator it1;																							   
+vector<int>::iterator it2;																							   
+vector<int>::iterator it3;																							   
+set<int>::iterator it4;																								   
+map<string, int>::iterator it5; 																					   
+vector<ii>::iterator iter;																							   
+																													   																				   
+#define print_list(x) for(it = (x).begin(); it != (x).end(); it++) {cout << *it << " ";}							   
+#define print_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++) {cout << *it2 << " ";}						   
+#define search_list(x) for(it = (x).begin(); it != (x).end(); it++)													   
+#define search_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++);											   
+#define pb(x) push_back(x) 																							   
+#define pf(x) push_front(x)																							   
+#define mp(x, y) make_pair(x, y)                                                                                       
+///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
+
+const int MAXC = 26;
+const int MAXS = 100000;
+int out[MAXS];
+int f[MAXS];
+int g[MAXS][MAXC];
+
+///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
+
+int automaton(const vector<string> &words, char lowestChar = 'a', char highestChar = 'z')
+{
+	memset(out, 0, sizeof out);
+	memset(f, -1, sizeof f);
+	memset(g, -1, sizeof g);
+	int states = 0;
+	
+	for(int i = 0; i < words.size(); i++)
+	{
+		const string &keyword = words[i];
+		int currentState = 0;
+		for(int j = 0; j < keyword.size(); j++)
+		{
+			int c = keyword[j] - lowestChar;
+			if(g[currentState][c] == -1)
+			{
+				g[currentState][c] = states++;
+			}
+			currentState = g[currentState][c];
+		}
+		out[currentState] |= (1 << i);
+	}
+	
+	for(int i = 0; i < MAXC; i++)
+	{
+		if(g[0][i] == -1)
+		{
+			g[0][i] = 0;
+		}
+	}
+	
+	qi q;
+	for(int i = 0; i <= highestChar - lowestChar; i++)
+	{
+		if(g[0][i] != -1 && g[0][i] != 0)
+		{
+			f[g[0][i]] = 0;
+			q.push(g[0][i]);
+		}
+	}
+	
+	while(q.size())
+	{
+		int state = q.front();
+		q.pop();
+		
+		for(int i = 0; i <= highestChar - lowestChar; i++)
+		{
+			if(g[state][i] != -1)
+			{
+				int failure = f[state];
+				while(g[failure][i] == -1)
+				{
+					failure = f[failure];
+				}
+				failure = g[failure][i];
+				f[g[state][i]] = failure;
+				out[g[state][i]] |= out[failure];
+				q.push(g[state][i]);
+			}
+		}
+	}
+	return states;
+}
+
+int FindNextState(int currentState, char NextInput, char lowestChar = 'a')
+{
+	int answer = currentState;
+	int c = NextInput - lowestChar;
+	while(g[answer][c] == -1)
+	{
+		answer = f[answer];
+	}
+	return g[answer][c];
+}
+
+/////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
+int main(int argc, char* argv[])																					 
+{ios_base::sync_with_stdio(false); cin.tie(NULL);                  												       
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+	vector<string> keywords;
+	//przykladowe dane
+	keywords.pb("he");
+	keywords.pb("she");
+	keywords.pb("hers");
+	keywords.pb("his");
+	string text = "ahishers";
+	automaton(keywords, 'a', 'z');
+	int currentState = 0;
+	for(int i = 0; i < text.size(); i++)
+	{
+		currentState = FindNextState(currentState, text[i], 'a');
+		if(out[currentState] == 0)
+			continue;
+		for(int j = 0; j < keywords.size(); j++)
+		{
+			if(out[currentState] & (1 << j))
+			{
+				cout << "keyword " << keywords[j] << " appears from " << i - keywords[j].size() + 1 <<
+				" to " << i << endl;
+			}
+		}
+	}
+	
+	return 0;
+}
