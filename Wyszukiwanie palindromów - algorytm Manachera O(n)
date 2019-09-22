@@ -1,4 +1,5 @@
 
+
 /*																													   
  Templatka c++ Kacper Fis																							   																											   //
 */																													  
@@ -54,73 +55,66 @@ vector<ii>::iterator iter;
 #define pb(x) push_back(x) 																							   
 #define pf(x) push_front(x)																							   
 #define mp(x, y) make_pair(x, y)                                                                                       
-///////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
+///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
 
-int P[10000];
 
-///////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])																					 
 {ios_base::sync_with_stdio(false); cin.tie(NULL);                  												       
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
 	string s;
-	cin >> s;
-  
-	string newString = "@";
+	cin >> s; //wczytujemy łańcuch s
+		
+	int rp, k;
+	int n = s.length();
+	int R[2][n+1];
+	s = "@" + s + "#"; //wstawiamy wartowników
 	
-	for(int i = 0; i < s.size(); i++)
+	for(int j = 0; j <= 1; j++)
 	{
-		newString += "#" + s.substr(i, 1);
+		R[j][0] = rp = 0;
+		int i = 1;
+		while(i <= n)
+		{
+			while(s[i - rp - 1] == s[i + j + rp]) rp++;
+			R[j][i] = rp;
+			k = 1;
+			while((R[j][i - k] != rp-k) && (k < rp))
+			{
+				R[j][i + k] = min(R[j][i - k], rp-k);
+				k++;
+			}
+			rp = max(rp-k, 0);
+			i += k;
+		}
 	}
-	newString += "#$";
+	s = s.substr(1, n); //usuwamy wartowników
+	
+	//prezentujemy wyliczone palindromy(piramidka)
+	
+	for(int i = 1; i < n; i++)
+	{
+		for(int j = 0; j <= 1; j++)
+		{
+			for(rp = R[j][i]; rp > 0; rp--)
+			{
+				for(k = 1; k < i - rp; k++) 
+				{
+					cout << " ";
+				}
+				cout << s.substr(i - rp - 1,2 * rp + j) << endl;
+			}
+		}
+	}
 
- 
-	string Q = newString;
-	int c = 0;
-	int r = 0;
-	
-	for(int i = 1; i < Q.size()-1; i++)
-	{
-		int mirror = c - (i-c);
-		
-		if(i < r)
-			P[i] = min(r - i, P[mirror]);
-		
-		while(Q[i+1+P[i]] == Q[i-1-P[i]])
-			P[i]++;
-			
-		if(i + P[i] > r)
-		{
-			c = i;
-			r = i + P[i];
-		}
-	}
-	
-	cout << "promienie palindromów: " << endl;
-	for(int i = 1; i < Q.size()-1; i++)
-	{
-		cout << P[i];
-	}
-	cout << endl;
-	
-	int maxPalindrome = 0;
-	int centerIndex = 0;
-	
-	for(int i = 1; i < Q.size(); i++)
-	{
-		if(P[i] > maxPalindrome)
-		{
-			maxPalindrome = P[i];
-			centerIndex = i;
-		}
-	}
-	
-	cout << "length of Max palindrome: " << maxPalindrome << endl;
-	cout << "Max palindrome: " << s.substr((centerIndex - 1 - maxPalindrome) / 2, maxPalindrome);
-	
 	return 0;
 }
+
 
 
