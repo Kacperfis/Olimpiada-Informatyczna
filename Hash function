@@ -23,7 +23,7 @@
 #include <time.h>																									   
 #include <iomanip> 																									   
 #include <sstream>																									   
-#include <bits/stdc++.h>																							   
+#include <unordered_map>																									   																							   
 																													   
 using namespace std; 																								   
 																													   
@@ -72,29 +72,32 @@ long long Hash_Function(string const& s) {
 
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])																					 
-{ios_base::sync_with_stdio(false); cin.tie(NULL);                  												       
+{              												       
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    long long wynik;
-    long long wynik2;
-    string s;
-    string p;
-    
-	vector< pair<LL,string> >hash_tab;  //HASH TABLE
-	vector< pair<LL,string> >::iterator ite; // HASH TABLE ITERATOR
-    
-	// Adding 2 strings to hash table
-    cin >> s;
-    cin >> p;
-    wynik = Hash_Function(s);
-    wynik2 = Hash_Function(p);
-    hash_tab.pb(mp(wynik, s));
-    hash_tab.pb(mp(wynik2, p));
-  
-	for(ite = hash_tab.begin(); ite != hash_tab.end(); ite++)
-	{
-		cout << ite->first << " " << ite->second << endl;
-	}
-	
+   
+   string s;
+   cin >> s;
+   
+   LL wynik = Hash_Function(s);
+   unordered_map<LL, string> hash_tab;
+   unordered_map<LL, string>::iterator ite;
+   hash_tab.insert(mp(wynik, s));
+   
+   for(ite = hash_tab.begin(); ite != hash_tab.end(); ite++)
+   {
+	   cout << ite->first << " " << ite->second << endl;
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 	
 	return 0;
 }
