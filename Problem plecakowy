@@ -1,0 +1,72 @@
+/*																													   
+ Templatka c++ Kacper Fis																							   																											   //
+*/																													  
+																								   
+#include <bits/stdc++.h>																							   
+																													   
+using namespace std; 																								   
+																													   
+const int INF = 1000000001;																						   
+const float PI = 3.14;																								   
+typedef long long LL; 																								   
+																													   
+typedef vector<int> vi;																								   
+typedef list<int> li;																								   
+typedef queue<int> qi; 																								   
+typedef pair<int,int> ii; 																							   
+typedef map<string,int> msi; //np msi['nazwa'] = 'liczba'															   
+typedef vector<ii> vii; //vector par<int>, do tworzenia tablicy dla grafów wagowych #dijkstra #Bellman_Ford			   
+typedef priority_queue< ii, vector<ii>, greater<ii> > pq; //kolejka priorytetowa vectorów par(top()=min) #dijkstra	   
+																													   																				   
+vector<ii>::iterator iter;																							   
+																							   																				   
+#define print_list(x) for(it = (x).begin(); it != (x).end(); it++) {cout << *it << " ";}							   
+#define print_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++) {cout << *it2 << " ";}						   
+#define search_list(x) for(it = (x).begin(); it != (x).end(); it++)													   
+#define search_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++);											   
+#define pb(x) push_back(x) 																							   
+#define pf(x) push_front(x)																							   
+#define mp(x, y) make_pair(x, y)                                                                                       
+///////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
+
+int dp[100][100];
+bool da_sie[100][100];
+int wartosc[100];
+int waga[100];
+
+///////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
+int main(int argc, char* argv[])																					 
+{ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);                  												       
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	int M, n;
+	cin >> n >> M;
+	for(int i = 1; i <= n; i++){
+		cin >> waga[i] >> wartosc[i];
+	}
+	da_sie[0][0] = true;
+	for(int i = 1; i <= n; i++){
+		for(int K = 0; K <= M; K++){
+			dp[i][K] = max(dp[i][K], dp[i - 1][K]);
+			da_sie[i][K] |= da_sie[i - 1][K];
+			if(K - waga[i] >= 0 && da_sie[i - 1][K - waga[i]]){
+				da_sie[i][K] = true;
+				dp[i][K] = max(dp[i][K], dp[i - 1][K - waga[i]] + wartosc[i]);
+			}
+		}
+	}
+
+	for(int i = 1; i <= n; i++){
+		for(int K = 0; K <= M; K++){
+			cout << dp[i][K] << " ";
+		}
+		cout << endl;
+	}
+
+	
+	return 0;
+}
+
+
