@@ -37,7 +37,7 @@ int dp[1000005];
 void DFS(int v, int p){
 	for(auto it : tab[v]){
 		if(it != p){
-			DFS(it, v) // oblicza dp[u]
+			DFS(it, v); // oblicza dp[u]
 			// zaktualizuj dp[v] na podstawie dp[u]
 		}
 	}
