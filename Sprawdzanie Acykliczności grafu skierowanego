@@ -1,27 +1,7 @@
 /*																													   //
  Templatka c++ Kacper Fis																							   //																												   //
 */																													   //
-																													   //
-#include <iostream>       // 10 Przykazan programisty:																   //	
-#include <cstdio>         // 1. napij sie szklanke wody     														   //
-#include <limits>		  // 2. dokladnie rozpisz Input z zadania i wielkosc zmiennych								   //
-#include <cstdlib>        // 3. zapisz caly algorytm na kartce														   //
-#include <utility>        // 4. testuj podczas kodowania, rob checkpointy, krok po kroku							   //
-#include <iterator>       // 5. mysl nie szablonowo, spojrz na problem od boku(pomysl matematycznie->dowodowo)		   //
-#include <bitset>         // 6. jesli rozwiazanie calkiem zawiodlo, zapomnij o nim i rob nowe						   //
-#include <list>           // 7. po 1.5h zrob sobie 5 min przerwy													   //
-#include <vector>         // 8. jesli masz rozwiazanie napisz do niego dokladne testy								   //
-#include <map>            // 9. jesli nie mozesz znalezc rozwiazania, to przypomnij sobie przerabiane algorytmy		   //
-#include <set>            //10. Optymalizuj rozwiazanie(!)															   //
-#include <queue>          																							   //
-#include <deque>          																							   //
-#include <stack>																									   //
-#include <algorithm>																								   //
-#include <cmath>																									   //
-#include <string>      																								   //
-#include <time.h>																									   //
-#include <iomanip> 																									   //
-#include <sstream>																									   //
+																													   //																								   //
 #include <bits/stdc++.h>																							   //
 																													   //
 using namespace std; 																								   //
