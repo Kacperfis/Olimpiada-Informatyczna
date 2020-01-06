@@ -78,7 +78,7 @@ void Union(int x, int y){
 	int yTemp = Find(y);
 	
 	if(xTemp == yTemp)
-		return;
+		return false; //elements didn't merge(same set)
 	
 	if(ranks[xTemp] < ranks[yTemp])
 		parent[xTemp] = yTemp;
@@ -88,6 +88,7 @@ void Union(int x, int y){
 		parent[yTemp] = xTemp;
 		ranks[xTemp]++;
 	}
+	return true; //elements merged(other sets)
 }
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])																					 
