@@ -81,10 +81,10 @@ void insert(int l, int r, int v){
 }
 
 int Query(int l, int r){
-	int L = l += leaf, R = r += leaf;
+	l += leaf; r += leaf;
 	
-	push(L);
-	push(R);
+	push(l);
+	push(l);
 	
 	int ans = max(tree[l], tree[r]);
 	while(l / 2 != r / 2){
