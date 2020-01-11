@@ -84,7 +84,7 @@ int Query(int l, int r){
 	l += leaf; r += leaf;
 	
 	push(l);
-	push(l);
+	push(r);
 	
 	int ans = max(tree[l], tree[r]);
 	while(l / 2 != r / 2){
