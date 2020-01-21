@@ -1,5 +1,3 @@
-
-
 /*																													   
  Templatka c++ Kacper Fis																							   																											   //
 */																													  
@@ -12,8 +10,9 @@
 #include <iterator>       
 #include <bitset>         
 #include <list>           
-#include <vector>         
-#include <map>            
+#include <vector>
+#include <map>
+#include <unordered_map>
 #include <set>            														   
 #include <queue>          																							   
 #include <deque>          																							   
@@ -57,64 +56,84 @@ vector<ii>::iterator iter;
 #define mp(x, y) make_pair(x, y)                                                                                       
 ///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
 
-
+set<string> palindromes; // palindromy
+vector<int> promienie(1000005); // promienie palindromów
 
 ///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
+string process(string word){
+	string s;
+	for(int i = 0; i < word.size(); i++)
+		if(word[i] != '#')
+			s += word[i];
+			
+	return s;
+}
 
+void Manacher(string s, int n){
+	int srodek = 0, prawy = -1, promien = 0;
+	for(int i = 0; i < n; i++){
+		//faza 1
+		if(i <= prawy){
+			promien = min(promienie[2 * srodek - i], prawy - i);
+		}
+		else promien = 0;
+		
+		//faza 2
+		while(i - promien >= 0 && i + promien < n && s[i - promien] == s[i + promien]){
+			string word = s.substr(i - promien, 2 * promien + 1);
+			string p = process(word); //removing hashes from word
+			if(p.size() != 1)
+				palindromes.insert(p);
+			promien++;
+			
+		}
+		
+		//faza 3
+		promienie[i] = promien-1;
+		string word;
+		if(i + promien >= prawy){
+			srodek = i;
+			prawy = i + promien - 1;
+		}
+	}
+}
 
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])																					 
 {ios_base::sync_with_stdio(false); cin.tie(NULL);                  												       
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-	string s;
-	cin >> s; //wczytujemy łańcuch s
-		
-	int rp, k;
-	int n = s.length();
-	int R[2][n+1];
-	s = "@" + s + "#"; //wstawiamy wartowników
-	
-	for(int j = 0; j <= 1; j++)
-	{
-		R[j][0] = rp = 0;
-		int i = 1;
-		while(i <= n)
-		{
-			while(s[i - rp - 1] == s[i + j + rp]) rp++;
-			R[j][i] = rp;
-			k = 1;
-			while((R[j][i - k] != rp-k) && (k < rp))
-			{
-				R[j][i + k] = min(R[j][i - k], rp-k);
-				k++;
-			}
-			rp = max(rp-k, 0);
-			i += k;
+    string s;
+    int n;
+    cin >> s;
+    
+    int j = 0;
+    string word = "";
+    for(int i = 0; i < (s.size()*2)-1; i++){  //dodawanie hashy pomiędzy litery, np: A#B#B#A
+		if(i % 2 == 1){
+			word += "#";
+		}
+		else{
+			 word += s[j];
+			 j++;
 		}
 	}
-	s = s.substr(1, n); //usuwamy wartowników
-	
-	//prezentujemy wyliczone palindromy(piramidka)
-	
-	for(int i = 1; i < n; i++)
-	{
-		for(int j = 0; j <= 1; j++)
-		{
-			for(rp = R[j][i]; rp > 0; rp--)
-			{
-				for(k = 1; k < i - rp; k++) 
-				{
-					cout << " ";
-				}
-				cout << s.substr(i - rp - 1,2 * rp + j) << endl;
-			}
-		}
-	}
+    
+    n = word.size();
+	Manacher(word, n);
 
+	//wypisanie palindromów:
+	
+	//cout << "palindromes: " << endl;
+	//for(auto it : palindromes){
+		//cout << it << endl;
+	//}
+ 
+ 
+ 
+	
+	
+	
 	return 0;
 }
-
-
-
