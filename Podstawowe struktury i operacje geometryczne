@@ -122,4 +122,6 @@ int main(int argc, char* argv[])
 	punkt c3(-1, 2);
 	cout << orientacja(a2, b, c1) << " " << orientacja(a2, b, c2) << " " << orientacja(a2, b, c3) << endl;
 	
+	return 0;
+	
 }
