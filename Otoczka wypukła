@@ -114,7 +114,7 @@ vector<punkt> otoczka(vector<punkt> P){
 	//dolna część otoczki
 	vector<punkt> D;
 	for(int i = P.size()-1; i >= 0; i--){
-		while(D.size() >= 2 && orientacja(D[D.size() - 2], D[D.size() - 1], D[i]) != -1) D.pop_back();
+		while(D.size() >= 2 && orientacja(D[D.size() - 2], D[D.size() - 1], P[i]) != -1) D.pop_back();
 		D.push_back(P[i]);
 	}
 	
