@@ -91,7 +91,6 @@ void Manacher(string s, int n){
 		
 		//faza 3
 		promienie[i] = promien-1;
-		string word;
 		if(i + promien >= prawy){
 			srodek = i;
 			prawy = i + promien - 1;
