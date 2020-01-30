@@ -87,6 +87,12 @@ int orientacja(punkt a, punkt b, punkt c){
 	return(t < 0 ? -1 : 1);
 }
 
+//sortowanie kątowe
+punkt punkt_globalny(0, 0);
+bool cmp(punkt a, punkt b){
+	return kat(punkt_globalny, a) < kat(punkt_globalny, b);
+}
+
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])																					 
 {ios_base::sync_with_stdio(false); cin.tie(NULL);    
