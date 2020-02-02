@@ -83,7 +83,10 @@ int main(int argc, char* argv[])
 	 *	1 2
 	 *	1 5
 	 *	3 5
-	 * 	4 5   
+	 * 	4 5
+	 *
+	 *	*Wzór na odległość między wierzchołkiem p i q: 
+	 *	odleglosc(p, q) = d[p] + d[q] - 2 * d[lca[p][q]]
 	 * 
      * * * * */
     
