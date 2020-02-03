@@ -1,6 +1,6 @@
 # Zadania do rozwiązania:
 
-# BFS
+## BFS
 
 https://codeforces.com/contest/59/problem/E
 
@@ -12,7 +12,7 @@ https://ki.staszic.waw.pl/task.php?name=krol
 
 https://szkopul.edu.pl/problemset/problem/oK44vqt7NCKfz0ABHGh4gfAT/site/?key=statement
 
-# DFS
+## DFS
 
 https://www.spoj.com/problems/ABCPATH/
 
@@ -24,7 +24,7 @@ https://szkopul.edu.pl/problemset/problem/y9HM1ctDU8V8xLMRUYACDIRs/site/?key=sta
 
 https://codeforces.com/contest/845/problem/G
 
-# Dijkstra
+## Dijkstra
 
 https://pl.spoj.com/problems/DIJKSTRA/
 
@@ -36,7 +36,7 @@ https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/prz/
 
 https://szkopul.edu.pl/c/oboz10-14grupa2/p/astmatyk/27525/
 
-# Bellman ford
+## Bellman ford
 
 https://onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=499 
 
@@ -45,7 +45,7 @@ https://atcoder.jp/contests/abc137/tasks/abc137_e
 https://open.kattis.com/problems/allpairspath
 
 
-# Floyd-Warshall
+## Floyd-Warshall
 
 https://www.spoj.com/problems/CHICAGO/
 
@@ -55,7 +55,7 @@ https://szkopul.edu.pl/problemset/problem/91AzX729-axIOm15TM0n2IlS/site/?key=sta
 
 https://ki.staszic.waw.pl/task.php?name=wsie
 
-# LCA
+## LCA
 
 https://szkopul.edu.pl/problemset/problem/-fb7NxSJGXxkJ2Om5FvXzbil/site/?key=statement
 
@@ -69,7 +69,7 @@ https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/zhb/
 
 https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/slomax/
 
-# MST
+## MST
 
 https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/mst/
 
@@ -79,7 +79,7 @@ https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_prob
 
 https://pl.spoj.com/problems/SPIN_PL/
 
-# SCC
+## SCC
 
 https://www.spoj.com/problems/SUBMERGE/
 
@@ -87,7 +87,7 @@ https://szkopul.edu.pl/problemset/problem/aKKSmtjWTtDOEHDqnmQ3-eAA/site/?key=sta
 
 https://www.spoj.com/problems/LEGO/
 
-# Sortowanie topologiczne
+## Sortowanie topologiczne
 
 https://www.spoj.com/problems/TOPOSORT/
 
@@ -97,13 +97,13 @@ https://szkopul.edu.pl/problemset/problem/_eiKtK6ANqMn5Nfl6UNJksjy/site/?key=sta
 
 https://www.spoj.com/problems/RPLA/
 
-# Acykliczonść
+## Acykliczonść
 
 https://codeforces.com/problemset/problem/915/D
 
 https://szkopul.edu.pl/problemset/problem/oghgoWt-Ai8xS6iTN8vHyoL3/site/?key=statement
 
-# Mosty i punkty artykulacji
+## Mosty i punkty artykulacji
 
 https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=737
 
@@ -113,7 +113,7 @@ https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_prob
 
 https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=13&page=show_problem&problem=1140
 
-# Cykl i ścieżka Eulera
+## Cykl i ścieżka Eulera
 
 
 https://szkopul.edu.pl/problemset/problem/2TGGJxhWE-0JhofFQQ90o0bP/site/?key=statement
@@ -122,7 +122,7 @@ https://www.spoj.com/problems/WORDS1/
 
 https://onlinejudge.org/external/1/101.pdf
 
-# Przepływ
+## Przepływ
 
 https://codeforces.com/problemset/problem/1252/L
 
