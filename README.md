@@ -1,6 +1,6 @@
 # Zadania do rozwiązania:
 
-## BFS
+# BFS
 
 https://codeforces.com/contest/59/problem/E
 
