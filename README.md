@@ -1,6 +1,6 @@
 # Zadania do rozwiązania:
 
-#Bellman ford
+# Bellman ford
 
 https://onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=499 
 
@@ -8,7 +8,7 @@ https://atcoder.jp/contests/abc137/tasks/abc137_e
 
 https://open.kattis.com/problems/allpairspath
 
-#Dijkstra
+# Dijkstra
 
 https://pl.spoj.com/problems/DIJKSTRA/
 
@@ -20,15 +20,17 @@ https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/prz/
 
 https://szkopul.edu.pl/c/oboz10-14grupa2/p/astmatyk/27525/
 
-#Floyd-Warshall
+# Floyd-Warshall
 
 https://www.spoj.com/problems/CHICAGO/
 
 https://szkopul.edu.pl/problemset/problem/HP0-iQt7v7vElza8XxoucKto/site/?key=statement
 
+https://szkopul.edu.pl/problemset/problem/91AzX729-axIOm15TM0n2IlS/site/?key=statement
+
 https://ki.staszic.waw.pl/task.php?name=wsie
 
-#BFS
+# BFS
 
 https://codeforces.com/contest/59/problem/E
 
@@ -40,8 +42,63 @@ https://ki.staszic.waw.pl/task.php?name=krol
 
 https://szkopul.edu.pl/problemset/problem/oK44vqt7NCKfz0ABHGh4gfAT/site/?key=statement
 
-#DFS
+# DFS
 
+https://www.spoj.com/problems/ABCPATH/
+
+https://codeforces.com/problemset/problem/580/C
+
+https://codeforces.com/gym/266998/problem/C
+
+https://szkopul.edu.pl/problemset/problem/y9HM1ctDU8V8xLMRUYACDIRs/site/?key=statement
+
+https://codeforces.com/contest/845/problem/G
+
+# MST
+
+https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/mst/
+
+https://www.spoj.com/problems/CSTREET/
+
+https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=975
+
+https://pl.spoj.com/problems/SPIN_PL/
+
+# SCC
+
+https://www.spoj.com/problems/SUBMERGE/
+
+https://szkopul.edu.pl/problemset/problem/aKKSmtjWTtDOEHDqnmQ3-eAA/site/?key=statement
+
+https://www.spoj.com/problems/LEGO/
+
+# Sortowanie topologiczne
+
+https://www.spoj.com/problems/TOPOSORT/
+
+https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/por/
+
+https://szkopul.edu.pl/problemset/problem/_eiKtK6ANqMn5Nfl6UNJksjy/site/?key=statement
+
+https://www.spoj.com/problems/RPLA/
+
+# Acykliczonść
+
+https://codeforces.com/problemset/problem/915/D
+
+https://szkopul.edu.pl/problemset/problem/oghgoWt-Ai8xS6iTN8vHyoL3/site/?key=statement
+
+# Mosty i punkty artykulacji
+
+https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=737
+
+https://onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=551
+
+https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=251
+
+https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=13&page=show_problem&problem=1140
+
+# Cykl i ścieżka Eulera
 
 
 
