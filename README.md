@@ -54,12 +54,11 @@ https://sio2.staszic.waw.pl/c/kolko-olimpijskie-201819/p/pos/
 
 https://sio2.staszic.waw.pl/c/kolko-olimpijskie-201819/p/sum/
 
+https://szkopul.edu.pl/problemset/problem/KUCDVoRoWc5kQbNZPUrY5eYO/site/?key=statement
 
+https://szkopul.edu.pl/problemset/problem/E_UP8if3dQ6IUlFNsD1CQOdy/site/?key=statement
 
-
-
-
-
+https://szkopul.edu.pl/problemset/problem/w-dbshXVyRol4LIT9jeP-bNn/site/?key=statement
 
 
 
