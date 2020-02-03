@@ -55,6 +55,20 @@ https://szkopul.edu.pl/problemset/problem/91AzX729-axIOm15TM0n2IlS/site/?key=sta
 
 https://ki.staszic.waw.pl/task.php?name=wsie
 
+# LCA
+
+https://szkopul.edu.pl/problemset/problem/-fb7NxSJGXxkJ2Om5FvXzbil/site/?key=statement
+
+https://ki.staszic.waw.pl/task.php?name=telekomunikacja
+
+https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/slo/
+
+https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/tra/
+
+https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/zhb/
+
+https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/slomax/
+
 # MST
 
 https://sio2.staszic.waw.pl/c/algorytmy-zaawansowane-201819/p/mst/
