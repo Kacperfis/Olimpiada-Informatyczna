@@ -101,4 +101,22 @@ https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=13&pa
 # Cykl i ścieżka Eulera
 
 
+https://szkopul.edu.pl/problemset/problem/2TGGJxhWE-0JhofFQQ90o0bP/site/?key=statement
 
+https://www.spoj.com/problems/WORDS1/
+
+https://onlinejudge.org/external/1/101.pdf
+
+# Przepływ
+
+https://codeforces.com/problemset/problem/1252/L
+
+https://codeforces.com/problemset/problem/546/E
+
+https://szkopul.edu.pl/problemset/problem/2owz-68y5sL4zjPY5IuKoqW1/site/?key=statement
+
+https://onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1271
+
+https://onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1720
+
+https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=761
