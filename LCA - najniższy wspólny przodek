@@ -54,7 +54,7 @@ int query(int p, int q){
 		swap(p, q);
 	}
 	
-	for(log = 1; 1 << log <= d[p]; log++);
+	for(log = 1; 1 << log <= d[p]; log++){}
 	log--;
 	//cout << "log: " << log << endl;
 	
