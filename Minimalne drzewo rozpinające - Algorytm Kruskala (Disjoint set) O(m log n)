@@ -40,13 +40,13 @@ pair <int, pair<int, int> > tab[1000];
 
 ///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
-void initialize()
+void makeset()
 {
     for(int i = 0; i < 1000; ++i)
         p[i] = i;
 }
  
-int root(int x)
+int find(int x)
 {
     while(p[x] != x)
     {
@@ -74,7 +74,7 @@ int kruskal(pair<int, pair<int, int> > tab[])
         y = tab[i].second.second;
         wt = tab[i].first;
         // Check if the selected edge is creating a cycle or not
-        if(root(x) != root(y))
+        if(find(x) != find(y))
         {
             total_wt += wt;
             Union(x, y);
@@ -88,9 +88,9 @@ int main(int argc, char* argv[])																					   //
 {ios_base::sync_with_stdio(false); cin.tie(NULL);                  												       //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-	int v1, v2, v3;
+    int v1, v2, v3;
     int total_wt;
-    initialize();
+    makeset();
     cin >> n >> m;
     for(int i = 0;i < m;++i)
     {
