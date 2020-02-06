@@ -37,7 +37,7 @@ int preorder[100005]; //tablica preorder
 int low[100005]; //tablica przechowująca wartości low
 int color[100005]; //tablica color
 int idx = 1; //kolejno nadawane indeksy dla preorder[v]
-
+vector< pair<int,int> > Mosty;
 ///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
 void dfs(int v, int p = -1){
@@ -55,6 +55,9 @@ void dfs(int v, int p = -1){
 			else{
 				dfs(it, v);
 				low[v] = min(low[v], low[it]);
+				if(low[it] > preorder[v]){
+					Mosty.pb(mp(v, it));
+				}
 			}
 		}
 	}
@@ -66,9 +69,10 @@ int main(int argc, char* argv[])
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*    //WYSZUKIWANIE MOSTÓW
      * 
-     * 1. Najpierw wyliczamy funkcję low przechodząc dfs
-     * 2. Jeśli potem low[i] == preorder[i], to krawędź
-     * 	  pi[i] -> i jest mostem
+     * 1. Najpierw wyliczamy funkcję low przechodząc dfs
+     * 2. Jeśli w przejściu dfs z wierzchołka v, gdy przeglądamy nieodwiedzony 
+     * 	  wcześniej wierzchołek "it" i zachodzi warunek low[it] > preorder[v] to
+     * 	  krawędź v->it jest mostem.
      * */
      
 	cin >> n >> m;
@@ -82,10 +86,8 @@ int main(int argc, char* argv[])
 	
 	//wypisane mostów
 	cout << "Mosty: " << endl;
-	for(int i = 2; i <= n; i++){
-		if(preorder[i] == low[i]){
-			cout << pi[i] << " " << i << endl;
-		}
+	for(auto it : Mosty){
+		cout << it.first << " " << it.second << endl;
 	}
 	
 	return 0;
