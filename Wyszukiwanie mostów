@@ -1,155 +1,92 @@
-#include <iostream>
-#include <list>
-#include <vector>
-#include <algorithm>
+/*																													   
+ Templatka c++ Kacper Fis																							   																											   //
+*/																													  
+																								   
+#include <bits/stdc++.h>																							   
+																													   
+using namespace std; 																								   
+		
+const double eps = 1e-9;																							   
+const long long INF = 1e18;																					   
+const float PI = 3.14;																								   
+typedef long long LL;																								   
+																													   
+typedef vector<int> vi;																								   
+typedef list<int> li;																								   
+typedef queue<int> qi; 																								   
+typedef pair<int,int> ii; 																							   
+typedef map<string,int> msi; //np msi['nazwa'] = 'liczba'															   
+typedef vector<ii> vii; //vector par<int>, do tworzenia tablicy dla grafów wagowych #dijkstra #Bellman_Ford			   
+typedef priority_queue< pair<LL, LL> , vector< pair<LL, LL> >, greater< pair<LL, LL> > > pq; //kolejka priorytetowa vectorów par(top()=min) #dijkstra	   
+																													   																				   
+vector<ii>::iterator iter;																							   
+																													   																				   
+#define print_list(x) for(it = (x).begin(); it != (x).end(); it++) {cout << *it << " ";}							   
+#define print_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++) {cout << *it2 << " ";}						   
+#define search_list(x) for(it = (x).begin(); it != (x).end(); it++)													   
+#define search_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++);											   
+#define pb(x) push_back(x) 																							   
+#define pf(x) push_front(x)																							   
+#define mp(x, y) make_pair(x, y)                                                                                       
+///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
 
-using namespace std;
+int n, m;
+li tab[100005]; //graf na liście sąsiedztwa
+int pi[100005]; //przodkowie wierzchołków
+int preorder[100005]; //tablica preorder
+int low[100005]; //tablica przechowująca wartości low
+int color[100005]; //tablica color
+int idx = 1; //kolejno nadawane indeksy dla preorder[v]
 
-void DFS_VISIT(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time);
-void LOW(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time);
+///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
-void DFS(list<int> tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time)
-{
-    for(int i = 1; i < n; i++)
-    {
-        if(color[i] == 0)
-        {
-            DFS_VISIT(i, tab, n, color, d, f, pi, low, time);
-        }
-    }
+void dfs(int v, int p = -1){
+	color[v] = 1;
+	pi[v] = p;
+	
+	preorder[v] = idx++;
+	low[v] = preorder[v];
+	
+	for(auto it : tab[v]){
+		if(it != p){
+			if(color[it] == 1){
+				low[v] = min(low[v], preorder[it]);
+			}
+			else{
+				dfs(it, v);
+				low[v] = min(low[v], low[it]);
+			}
+		}
+	}
 }
 
-void DFS_VISIT(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time)
-{
-    list<int>::iterator it;
-
-    color[v] = 1;
-    time = time + 1;
-    d[v] = time;
-
-    for(it = tab[v].begin(); it != tab[v].end(); it++)
-    {
-        if(color[*it] == 0)
-        {
-            pi[*it] = v;
-            DFS_VISIT(*it, tab, n, color, d, f, pi, low, time);
-        }
-    }
-
-    color[v] = 2;
-    time = time + 1;
-    f[v] = time;
-    LOW(v, tab, n, color, d, f, pi, low, time);
-}
-
-void LOW(int v, list<int> tab[], int n, int color[], int d[], int f[], int pi[], int low[], int time)
-{
-    vector<int> V;
-    vector<int> low2;
-    vector<int> low3;
-    vector<int> parents;
-    vector<int>::iterator it2;
-    list<int>::iterator it;
-
-    V.push_back(d[v]);
-
-    for(it = tab[v].begin(); it != tab[v].end(); it++)
-    {
-        if(*it != pi[v])
-            low3.push_back(d[*it]);
-    }
-
-    if(low3.size() != 0)
-    {
-         sort(low3.begin(), low3.end());
-        V.push_back(*low3.begin());
-    }
-
-    for(int i = 1; i < n; i++)
-    {
-        if(pi[i] == v)
-            parents.push_back(i);
-    }
-
-    for(it2 = parents.begin(); it2 != parents.end(); it2++)
-    {
-        if(low[*it2] != 0)
-            low2.push_back(low[*it2]);
-    }
-
-    if(low2.size() != 0)
-    {
-        sort(low2.begin(), low2.end());
-        V.push_back(*low2.begin());
-    }
-
-    sort(V.begin(), V.end());
-    low[v] = *V.begin();
-
-    V.clear();
-    low2.clear();
-    low3.clear();
-    parents.clear();
-}
-
-int main()
-{
-    int n, m, v1, v2;
-    cin >> n >> m;
-
-    n+=1;
-    m+=1;
-
-    list<int> *tab = new list<int>[n];
-
-    for(int i = 1; i < m; i++)
-    {
-        cin >> v1 >> v2;
-        tab[v1].push_back(v2);
-        tab[v2].push_back(v1);
-    }
-
-    int *color = new int[n];
-    int *d = new int[n];
-    int *f = new int[n];
-    int *pi = new int[n];
-    int *low = new int[n];
-    int time = 0;
-
-    for(int i = 1; i < n; i++)
-    {
-        color[i] = 0;
-        d[i] = 0;
-        f[i] = 0;
-        pi[i] = 0;
-        low[i] = 0;
-    }
-
-    DFS(tab, n, color, d, f, pi, low, time);
-
-    cout << endl << "low: " << endl;
-    for(int i = 1;i < n; i++)
-    {
-        cout << i << ": " << low[i] << endl;
-    }
-    cout << endl << "d: " << endl;
-    for(int i = 1;i < n; i++)
-    {
-        cout << i << ": " << d[i] << endl;
-    }
-
-    cout << endl << "wynik: " << endl;
-    for(int i = 2; i < n; i++)
-    {
-        if(d[i] == low[i])
-            cout << pi[i] << " " << i << endl;
-    }
-
-    delete [] color;
-    delete [] d;
-    delete [] f;
-    delete [] pi;
-    delete [] low;
-
-    return 0;
+/////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
+int main(int argc, char* argv[])																					 
+{ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);                  												       
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*    //WYSZUKIWANIE MOSTÓW
+     * 
+     * 1. Najpierw wyliczamy funkcję low przechodząc dfs
+     * 2. Jeśli potem low[i] == preorder[i], to krawędź
+     * 	  pi[i] -> i jest mostem
+     * */
+     
+	cin >> n >> m;
+	for(int i = 0; i < m; i++){
+		int v1, v2;
+		cin >> v1 >> v2;
+		tab[v1].pb(v2);
+		tab[v2].pb(v1);
+	}
+	dfs(1);
+	
+	//wypisane mostów
+	cout << "Mosty: " << endl;
+	for(int i = 2; i <= n; i++){
+		if(preorder[i] == low[i]){
+			cout << pi[i] << " " << i << endl;
+		}
+	}
+	
+	return 0;
 }
