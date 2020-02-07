@@ -32,7 +32,6 @@ vector<ii>::iterator iter;
 
 int n, m;
 li tab[100005]; //graf na liście sąsiedztwa
-int pi[100005]; //przodkowie wierzchołków
 int preorder[100005]; //tablica preorder
 int low[100005]; //tablica przechowująca wartości low
 int color[100005]; //tablica color
@@ -44,7 +43,6 @@ set<int> punkty_artykulacji;
 
 void dfs(int v, int p = -1){
 	color[v] = 1;
-	pi[v] = p;
 	
 	preorder[v] = idx++;
 	low[v] = preorder[v];
