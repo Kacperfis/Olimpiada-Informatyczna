@@ -1,80 +1,106 @@
-DLA GRAFÓW NUMEROWANYCH OD 0:
+/*																													   
+ Templatka c++ Kacper Fis																							   																											   //
+*/																													  
+																													   
+#include <iostream>       	
+#include <cstdio>         
+#include <limits>		  
+#include <cstdlib>       
+#include <utility>        
+#include <iterator>       
+#include <bitset>         
+#include <list>           
+#include <vector>         
+#include <map>
+#include <unordered_map>            
+#include <set>            														   
+#include <queue>          																							   
+#include <deque>          																							   
+#include <stack>																									   
+#include <algorithm>
+#include <cstdint>																								   
+#include <cmath>																									   
+#include <string>      																								   
+#include <time.h>																									   
+#include <iomanip> 																									   
+#include <sstream>	
+#include <bits/stdc++.h>																								   																						   
+																													   
+using namespace std; 																								   
+																													   
+const int INF = 1000000001;																						   
+const float PI = 3.14;																								   
+typedef long long LL;																								   
+																													   
+typedef vector<int> vi;																								   
+typedef list<int> li;																								   
+typedef queue<int> qi; 																								   
+typedef pair<int,int> ii; 																							   
+typedef map<string,int> msi; //np msi['nazwa'] = 'liczba'															   
+typedef vector<ii> vii; //vector par<int>, do tworzenia tablicy dla grafów wagowych #dijkstra #Bellman_Ford			   
+typedef priority_queue< ii, vector<ii>, greater<ii> > pq; //kolejka priorytetowa vectorów par(top()=min) #dijkstra	   
+																																														   
+vector<ii>::iterator iter;																							   
+																													   																				   
+#define print_list(x) for(it = (x).begin(); it != (x).end(); it++) {cout << *it << " ";}							   
+#define print_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++) {cout << *it2 << " ";}						   
+#define search_list(x) for(it = (x).begin(); it != (x).end(); it++)													   
+#define search_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++);											   
+#define pb(x) push_back(x) 																							   
+#define pf(x) push_front(x)																							   
+#define mp(x, y) make_pair(x, y)   
+                                                         
+///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
 
+li tab[100005];
+int color[100005];
+int d[100005];
+int p[100005];
 
-#include <iostream>
-#include <list>
-#include <queue>
+///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
-using namespace std;
-
-void BFS(list<int> tab[], int s)
-{
-    int color[8] = {0};
-    int d[8] = {0};
-    int pi[8] = {0};
-    queue<int> Q;
-    list<int>::iterator j;
-    int u;
-
-       color[s] = 1;
-       d[s] = 0;
-       pi[s] = 0;
-
-       Q.push(s);
-
-       while(!Q.empty())
-       {
-           u = Q.front();
-           Q.pop();
-           for(j = tab[u].begin(); j != tab[u].end(); j++)
-           {
-               if(color[*j] == 0)
-               {
-                   color[*j] = 1;
-                   d[*j] = d[u] + 1;
-                   pi[*j] = u;
-                   Q.push(*j);
-
-               }
-           }
-           color[u] = 2;
-       }
-
-   cout << "wierz     " << "pi[]     " << "d[]     " << "color[]" << endl;
-   for(int i = 0; i < 8; i++)
-   {
-       cout << i << ":          " << pi[i] << "       " << d[i] << "        " << color[i] << endl;
-   }
-
+void BFS(int v){
+	qi q;
+	int u;
+	color[v] = 1;
+	d[v] = 0;
+	p[v] = 0;
+	q.push(v);
+	
+	while(!q.empty()){
+		u = q.front();
+		q.pop();
+		for(auto it : tab[u]){
+			if(color[it] == 0){
+				color[it] = 1;
+				d[it] = d[u] + 1;
+				p[it] = u;
+				q.push(it);
+			}
+		}
+		color[u] = 2;
+	}
 }
 
-
-int main()
-{
-    list<int> tab[8];
-
-    tab[0].push_back(1);
-    tab[0].push_back(4);
-    tab[0].push_back(5);
-    tab[4].push_back(0);
-    tab[4].push_back(5);
-    tab[1].push_back(0);
-    tab[1].push_back(5);
-    tab[1].push_back(6);
-    tab[5].push_back(4);
-    tab[5].push_back(0);
-    tab[5].push_back(1);
-    tab[5].push_back(6);
-    tab[6].push_back(1);
-    tab[6].push_back(5);
-    tab[6].push_back(2);
-    tab[2].push_back(6);
-    tab[2].push_back(3);
-    tab[3].push_back(2);
-    tab[3].push_back(7);
-    tab[7].push_back(3);
-
-    BFS(tab, 0);
-
-    return 0;
+/////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
+int main(int argc, char* argv[])																					 
+{                 												       
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	int n, m;
+	cin >> n >> m;
+	for(int i = 0; i < m; i++){
+		int v1, v2;
+		cin >> v1 >> v2;
+		tab[v1].pb(v2);
+		tab[v2].pb(v1);
+	}
+	
+	BFS(0);
+	
+	for(int i = 0; i < n; i++){
+		cout << i << ": " << color[i] << " " << d[i] << " " << p[i] << endl;
+	}
+	
+	return 0;
 }
