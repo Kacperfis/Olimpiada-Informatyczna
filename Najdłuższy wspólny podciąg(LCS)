@@ -29,17 +29,29 @@ vector<ii>::iterator iter;
 #define mp(x, y) make_pair(x, y)                                                                                       
 ///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
 
-
+string s1, s2;
 int dp[1000][1000];
+
 ///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
+string LCS(string X, string Y, int n, int m){
+	if(n == 0 || m == 0)
+		return string("");
+		
+	else if(X[n-1] == Y[m-1])	
+		return LCS(X, Y, n-1, m-1) + X[n-1];
+		
+	else if(dp[n-1][m] > dp[n][m-1])
+		return LCS(X, Y, n-1, m);
+		
+	else return LCS(X, Y, n, m-1);
+}
 
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])																					 
 {ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);                  												       
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	string s1, s2;
 	cin >> s1 >> s2;
 	
 	int n = s1.size();
@@ -59,7 +71,10 @@ int main(int argc, char* argv[])
 		}
 	}
 	
-	cout << dp[n][m] << endl;
+	string ans = LCS(s1, s2, n, m);
+	cout << "dlugosc lcs: " << dp[n][m] << endl;
+	cout << "lcs: " << ans << endl;
 	
 	return 0;
 }
+
