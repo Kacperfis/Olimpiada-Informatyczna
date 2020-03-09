@@ -34,13 +34,13 @@ int indeks = 0;
 
 ///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
-void push(int v){
+void push(int v){ //dodawanie liczby
 	while(!Q.empty() && Q.back().first > v) Q.pop_back();
 	Q.push_back(mp(v, indeks++));
 	
 }
 
-int takeMax(int k){
+int takeMax(int k){ //funkcja zwraca max z wczytanych liczb
 	while(Q.front().second + k < indeks) Q.pop_front();
 	return Q.front().first;
 }
