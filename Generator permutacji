@@ -1,0 +1,16 @@
+ srand(time(NULL));
+    int t = 1000; //ilość testów
+    cout << t << endl;
+    while(t--){
+		int n = (rand() % 200000)+1; //ilość liczb w permutacji [1...n]
+		vector<int> tab;
+		for(int i = 1; i <= n; i++){
+			tab.pb(i);
+		}
+		random_shuffle(tab.begin(), tab.end());
+		
+		cout << n << endl;
+		for(int i = 0; i < n; i++) cout << tab[i] << " ";
+		cout << endl;
+	}
+	
