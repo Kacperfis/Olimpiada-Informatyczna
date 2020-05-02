@@ -1,4 +1,4 @@
- srand(time(NULL));
+    srand(time(NULL));
     int t = 1000; //ilość testów
     cout << t << endl;
     while(t--){
