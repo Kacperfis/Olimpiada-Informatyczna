@@ -1,0 +1,124 @@
+/*																													   
+ Templatka c++ Kacper Fis																							   																											   //
+*/																													  
+																								   
+#include <bits/stdc++.h>																							   
+																													   
+using namespace std; 																								   
+																													   
+const int INF = 1000000001;																						   
+const float PI = 3.14;																								   
+typedef long long LL;																								   
+																													   
+typedef vector<int> vi;																								   
+typedef list<int> li;																								   
+typedef queue<int> qi; 																								   
+typedef pair<int,int> ii; 																							   
+typedef map<string,int> msi; //np msi['nazwa'] = 'liczba'															   
+typedef vector<ii> vii; //vector par<int>, do tworzenia tablicy dla grafów wagowych #dijkstra #Bellman_Ford			   
+typedef priority_queue< ii, vector<ii>, greater<ii> > pq; //kolejka priorytetowa vectorów par(top()=min) #dijkstra	   
+																													   																				   
+vector<ii>::iterator iter;																							   
+																													   																				   
+#define print_list(x) for(it = (x).begin(); it != (x).end(); it++) {cout << *it << " ";}							   
+#define print_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++) {cout << *it2 << " ";}						   
+#define search_list(x) for(it = (x).begin(); it != (x).end(); it++)													   
+#define search_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++);											   
+#define pb(x) push_back(x) 																							   
+#define pf(x) push_front(x)																							   
+#define mp(x, y) make_pair(x, y)                                                                                       
+///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
+
+int d, q;
+const int p = 19;
+int tree[2000005];
+int leaf = 1 << (p - 1);
+int lazy[2000005];
+
+///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
+
+void apply(int a, int v){
+	tree[a] += v;
+	lazy[a] += v;
+}
+
+void add(int a, int v){
+	while(a){
+		tree[a] += v;
+		a /= 2;
+	}
+}
+
+void push(int a){
+	for(int j = p; j > 0; j--){
+		int i = a >> j;
+		if(lazy[i]){
+			lazy[i * 2] += lazy[i];
+			lazy[i * 2 + 1] += lazy[i];
+			lazy[i] = 0;
+		}
+	}
+}
+
+void insert(int l, int r, int v){
+	l += leaf;
+	r += leaf;
+	
+	push(l);
+	push(r);
+	
+	apply(l, v);
+	if(r != l) apply(l, v);
+	
+	while(l / 2 != r / 2){
+		if(l % 2 == 0) apply(l + 1, v);
+		if(r % 2 == 1) apply(r - 1, v);
+		l /= 2;
+		r /= 2;
+	}
+}
+
+int query(int l, int r){
+	l += leaf;
+	r += leaf;
+	
+	push(l);
+	push(r);
+	
+	int ans = tree[l];
+	if(l != r) ans += tree[r];
+	
+	while(l / 2 != r / 2){
+		if(l % 2 == 0) ans += tree[l];
+		if(r % 2 == 1) ans += tree[r];
+		l /= 2;
+		r /= 2;
+	}
+	return ans;
+}
+
+
+/////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
+int main(int argc, char* argv[])																					 
+{//ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);                  												       
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	int n;
+	cin >> n; //liczba operacji na drzewie
+	for(int i = 0; i < n; i++){
+		int x; //1 = add(l, r, v) -> dodanie na przedziale, 2 = query(l, r) -> suma na przedziale
+		cin >> x;
+		if(x == 1){ //add
+			int a, b, v;
+			cin >> a >> b >> v;
+			insert(a, b, v);
+		}
+		else if(x == 2){ //query (l, r)
+			int l, r;
+			cin >> l >> r;
+			cout << query(l, r) << '\n';
+		}
+	}
+	
+	return 0;
+}
