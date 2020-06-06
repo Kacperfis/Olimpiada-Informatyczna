@@ -42,13 +42,6 @@ void apply(int a, int v){
 	lazy[a] += v;
 }
 
-void add(int a, int v){
-	while(a){
-		tree[a] += v;
-		a /= 2;
-	}
-}
-
 void push(int a){
 	for(int j = p; j > 0; j--){
 		int i = a >> j;
