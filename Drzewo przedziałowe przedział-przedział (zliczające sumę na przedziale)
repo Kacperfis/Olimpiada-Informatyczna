@@ -89,8 +89,8 @@ int query(int l, int r){
 	if(l != r) ans += tree[r];
 	
 	while(l / 2 != r / 2){
-		if(l % 2 == 0) ans += tree[l];
-		if(r % 2 == 1) ans += tree[r];
+		if(l % 2 == 0) ans += tree[l + 1];
+		if(r % 2 == 1) ans += tree[r - 1];
 		l /= 2;
 		r /= 2;
 	}
