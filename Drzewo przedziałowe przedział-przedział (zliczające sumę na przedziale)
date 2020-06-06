@@ -68,7 +68,7 @@ void insert(int l, int r, int v){
 	push(r);
 	
 	apply(l, v);
-	if(r != l) apply(l, v);
+	if(r != l) apply(r, v);
 	
 	while(l / 2 != r / 2){
 		if(l % 2 == 0) apply(l + 1, v);
