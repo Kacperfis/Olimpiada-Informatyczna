@@ -62,47 +62,52 @@ int leaf = 1 << (H - 1);
 
 ///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
-void upd(int &l, int r) {
-    l = min(1000000000, l + r);
+void update(int &ans, int r) {
+    ans = max(-INF, ans + r);
 }
 
 void insert(int l, int r, int v) {
     l += leaf; r += leaf;
     
-    upd(tree[l], v);
-    if(l != r) upd(tree[r], v);
+    update(tree[l], v);
+    if(l != r) update(tree[r], v);
     
     while(l / 2 != r / 2) {
-        if(l % 2 == 0) upd(tree[l + 1], v);
-        if(r % 2 == 1) upd(tree[r - 1], v);
+        if(l % 2 == 0) update(tree[l + 1], v);
+        if(r % 2 == 1) update(tree[r - 1], v);
         l /= 2;
         r /= 2;
     }
 }
 
-int get(int pos) {
-    pos += leaf;
+int query(int a) {
+    a += leaf;
     int ans = 0;
-    while(pos) {
-        upd(ans, tree[pos]);
-        pos /= 2;
+    while(a) {
+        update(ans, tree[a]);
+        a /= 2;
     }
     return ans;
 }
-
-
 
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])																					 
 {ios_base::sync_with_stdio(false); cin.tie(NULL);    
 
-	
-	
-	
-	
-	
-	
+	int q;
+	cin >> q;
+	while(q--){
+		int x;
+		cin >> x;
+		if(x == 1){ //dodawanie na przedziale
+			int a, b, c; cin >> a >> b >> c;
+			insert(a, b, c);
+		}
+		else if(x == 2){ //maximum w punkcie
+			int a; cin >> a;
+			cout << query(a) << '\n';
+		}
+	}
 	
 	return 0;
-}              												       
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}     
