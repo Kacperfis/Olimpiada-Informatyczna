@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+
+//Author = Bartosz Brejna - Przedział-przedział(suma)
+
+using namespace std;
+
+vector<int> T;
+vector<int> p;
+int w, a, b, c, k, shift;
+
+void lazy(int u) {
+    T[u]+=p[u];
+    if (u < shift) p[2*u]+=p[u]/2, p[2*u+1]+=p[u]/2;
+    p[u] = 0;
+}
+
+void upd(int l, int r, int v, int x=0, int y=shift-1, int u=1, int g=1) {
+    lazy(u);
+    if (y < l || x > r) return;
+    if (l <= x && y <= r) {
+        p[u]+=v*(1<<(k-g+1));
+        lazy(u);
+        return;
+    }
+    int m = (x+y)/2;
+    upd(l,r,v,x,m,2*u,g+1), upd(l,r,v,m+1,y,2*u+1,g+1);
+    T[u] = T[2*u]+T[2*u+1];
+}
+
+int ask(int l, int r, int x=0, int y=shift-1, int u=1) {
+    lazy(u);
+    if (y < l || x > r) return 0;
+    if (l <= x && y <= r) return T[u];
+    int m = (x+y)/2;
+    return ask(l,r,x,m,2*u)+ask(l,r,m+1,y,2*u+1);
+}
+
+int main() {
+    int n; cin >> n;
+    while ((1<<k) < n) k++;
+    shift = (1<<k);
+    T.resize(2*shift), p.resize(2*shift);
+    int q; cin >> q; while (q--) {
+        cin >> w >> a >> b;
+        if (w==1) {
+            cin >> c;
+            upd(a-1,b-1,c);
+        } else 
+            cout << ask(a-1,b-1) << "\n";
+    }
+}
