@@ -1,0 +1,46 @@
+// Author = Bartosz Brejna, punkt-przedzial max
+
+#include <bits/stdc++.h>
+
+#define INF LLONG_MAX
+
+using namespace std;
+
+vector<long long> T;
+int n, q, k, shift, w, a, b, c;
+
+long long ask(int u) {
+    u+=shift;
+    long long ans = 0;
+    while (u) {
+        ans+=T[u];
+        u/=2;
+    }
+    return ans;
+}
+
+void upd(int l, int r, int v, int x=0, int y=shift-1, int u=1) {
+    if (y < l || x > r) return;
+    if (l <= x && y <= r) { 
+        T[u]=v;
+        return;
+    }
+    int m = (x+y)/2;
+    upd(l,r,v,x,m,2*u), upd(l,r,v,m+1,y,2*u+1);
+}
+
+int main() {
+    cin.tie(NULL);cout.tie(NULL);ios::sync_with_stdio(0);
+    cin >> n >> q;
+    while ((1<<k) < n) k++;
+    shift = (1<<k);
+    T.resize(2*shift);
+    while (q--) {
+        cin >> w >> a;
+        if (w==2) cout << ask(a-1) << "\n";
+        else {
+            cin >> b >> c;
+            upd(a-1,b-1,c);
+        }
+    }
+}
