@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+
+//author = Bartosz Brejna - przedział-przedział (MAX)
+
+#define INF LLONG_MAX
+
+using namespace std;
+
+vector<long long> T, p;
+int n, k, shift, q, w, a, b, c;
+
+void lazy(int u) {
+    T[u]+=p[u];
+    if (u < shift) p[2*u]+=p[u], p[2*u+1]+=p[u];
+    p[u] = 0;
+}
+
+void upd(int l, int r, int v, int x=0, int y=shift-1, int u=1) {
+    lazy(u);
+    if (y < l || x > r) return;
+    if (l <= x && y <= r) {
+        p[u]+=v;
+        lazy(u);
+        return;
+    }
+    int m = (x+y)/2;
+    upd(l,r,v,x,m,2*u),upd(l,r,v,m+1,y,2*u+1);
+    T[u] = max(T[2*u],T[2*u+1]);
+}
+
+long long ask(int l, int r, int x=0, int y=shift-1, int u=1) {
+    lazy(u);
+    if (y < l || x > r) return -INF;
+    if (l <= x && y <= r) return T[u];
+    int m = (x+y)/2;
+    return max(ask(l,r,x,m,2*u),ask(l,r,m+1,y,2*u+1));
+}
+
+int main() {
+    cin.tie(NULL);cout.tie(NULL);ios_base::sync_with_stdio(0);
+    cin >> n >> q;
+    while ((1<<k) < n) k++;
+    shift = (1<<k);
+    T.resize(2*shift),p.resize(2*shift);
+    while (q--) {
+        cin >> w >> a >> b;
+        if (w==1) {
+            cin >> c;
+            upd(a-1,b-1,c);
+        } else
+        cout << ask(a-1,b-1) << "\n";
+    }
+}
