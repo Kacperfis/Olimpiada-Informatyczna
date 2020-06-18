@@ -1,4 +1,1 @@
 # Olimpiada-Informatyczna
-
-## xddddddddddddddddddd
-### xddddddddddddd
