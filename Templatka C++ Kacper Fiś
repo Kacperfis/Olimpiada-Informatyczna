@@ -20,9 +20,11 @@ typedef vector<ii> vii;
 typedef priority_queue< ii, vector<ii>, greater<ii> > pq;    																								   																				   
 vector<ii>::iterator iter;																							   
 																													   																				   										   
-#define pb(x) push_back(x) 																							   
-#define pf(x) push_front(x)																							   
+#define pb push_back																							   
+#define pf push_front																							   
 #define mp(x, y) make_pair(x, y)
+#define size(x) (int)x.size()
+#define endl '\n'
 
 int _X[] = {0, 1, 1, 1, 0, -1, -1, -1};
 int _Y[] = {-1, -1, 0, 1, 1, 1, 0, -1};
@@ -77,7 +79,7 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 int main(int argc, char* argv[])																					 
 {ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);                  												       
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+	
     
  
  
