@@ -45,7 +45,7 @@ int tree[2000005];
 void add(int a, int x){
 	a += leaf;
 	while(a){
-		tree[a] += x;
+		tree[a] += max(tree[a], x);
 		a /= 2;
 	}
 }
@@ -69,7 +69,8 @@ int main(int argc, char* argv[])
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	int q;
-	cin >> q;
+	cin >> q;\
+	fill(tree, tree+2000003, -INF);
 	for(int i = 1; i <= q; i++){
 		int x, a, b, v; //x == 1 -->dodawanie elementu b na pozycję a; x == 2 --> sumowanie elementów od a do b 
 		cin >> x;
