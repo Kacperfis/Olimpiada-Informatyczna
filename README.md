@@ -1,1 +1,0 @@
-# Olimpiada-Informatyczna
