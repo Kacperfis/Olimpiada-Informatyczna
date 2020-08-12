@@ -1,0 +1,76 @@
+/*																													   //
+ Templatka c++ Kacper Fis Š																							   //
+ Zad: 																												   //
+*/																													   //																									   //
+#include <bits/stdc++.h>																							   //
+																													   //
+using namespace std; 																								   //
+																													   //
+const long long INFL =  1e18+1;																						   //
+const float PI = 3.14;																								   //
+typedef long long LL;																								   //
+																													   //
+typedef vector<int> vi;																								   //
+typedef list<int> li;																								   //
+typedef queue<int> qi; 																								   //
+typedef pair<int,int> ii;
+typedef pair<LL, LL> ll; 																							   //
+typedef map<string,int> msi; //np msi['nazwa'] = 'liczba'															   //
+typedef vector<ii> vii; //vector par<int>, do tworzenia tablicy dla grafów wagowych #dijkstra #Bellman_Ford			   //
+typedef priority_queue< pair<LL, LL> > pq; //kolejka priorytetowa vectorów par(top()=min) #dijkstra	   //
+																													   // 																					   //
+vector<ll>::iterator iter;																							   //
+																													   //																			   //
+#define print_list(x) for(it = (x).begin(); it != (x).end(); it++) {cout << *it << " ";}							   //
+#define print_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++) {cout << *it2 << " ";}						   //
+#define search_list(x) for(it = (x).begin(); it != (x).end(); it++)													   //
+#define search_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++);											   //
+#define pb(x) push_back(x) 																							   //
+#define pf(x) push_front(x)																							   //
+#define mp(x, y) make_pair(x, y)                                                                                       //
+///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
+
+int tab[100005];
+
+///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
+
+int magic(int x){return x & -x;}
+
+int query(int l, int r){
+	int suma1 = 0;
+	int suma2 = 0;
+	for(; r > 0; r -= magic(r)) suma1 += tab[r];
+	for(; l > 0; l -= magic(l)) suma2 += tab[l];
+	return (suma1 - suma2); 
+}
+
+void add(int pos, int v){
+	for(; pos <= 100005; pos += magic(pos)) tab[pos] += v;
+}
+
+/////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
+int main()																											   //
+{ios_base::sync_with_stdio(false); cin.tie(NULL);                  												       //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	int q;
+	cin >> q;
+	while(q--){
+		int x;
+		cin >> x;
+		if(x == 1){	//add
+			int pos, v;
+			cin >> pos >> v;
+			add(pos, v);
+		}
+		else if(x == 2){ //query
+			int l, r;
+			cin >> l >> r;
+			cout << query(l, r) << endl;
+		}
+	}
+	
+
+
+	return 0;
+}
