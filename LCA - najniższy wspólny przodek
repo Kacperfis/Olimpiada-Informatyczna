@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 		tab[v2].pb(v1);
 	}
 	
-	dfs(1, -1); //korzen = 1, przechodzimy dfs znajdując przodka każdego z wierzchołków
+	dfs(1, 0); //korzen = 1, przechodzimy dfs znajdując przodka każdego z wierzchołków
 	
 	for(int i = 1; i < 17; i++){ //obliczamy wszystkich przodków wierzchołków(potęgi 2)(1-wszy, 2-ugi, 4-ty, 8-my)(dp)
 		for(int v = 1; v <= n; v++){
