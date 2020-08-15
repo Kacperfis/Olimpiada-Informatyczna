@@ -1,129 +1,123 @@
-/*
- Templatka c++ Kacper Fis																							   																											   //
-*/
-
-#include <iostream>
-#include <cstdio>
-#include <limits>
-#include <cstdlib>
-#include <utility>
-#include <iterator>
-#include <bitset>
-#include <list>
-#include <vector>
-#include <map>
-#include <set>
-#include <queue>
-#include <deque>
-#include <stack>
-#include <algorithm>
-#include <cmath>
-#include <string>
-#include <time.h>
-#include <iomanip>
-#include <sstream>
-#include <bits/stdc++.h>
-
-using namespace std;
-
-const int INF = 1000000001;
-const float PI = 3.14;
-typedef long long LL;
-
-typedef vector<int> vi;
-typedef list<int> li;
-typedef queue<int> qi;
+#include <bits/stdc++.h>																							   
+																									   
+using namespace std; 																								   
+		
+const double eps = 1e-9;																							   
+const int INF = 1e9;
+const long long INFL = 1e18;																					   
+const double PI = 3.14;
+const int mod = 1e9 + 7;																								   
+typedef long long LL;																								   
+																													   
+typedef vector<int> vi;																								   
+typedef list<int> li;																								   
+typedef queue<int> qi; 																								   
 typedef pair<int,int> ii;
-typedef map<string,int> msi; //np msi['nazwa'] = 'liczba'
-typedef vector<ii> vii; //vector par<int>, do tworzenia tablicy dla grafów wagowych #dijkstra #Bellman_Ford
-typedef priority_queue< ii, vector<ii>, greater<ii> > pq; //kolejka priorytetowa vectorów par(top()=min) #dijkstra
-
-list<int>::iterator it;
-list<int>::iterator it1;
-vector<int>::iterator it2;
-vector<int>::iterator it3;
-set<int>::iterator it4;
-map<string, int>::iterator it5;
-vector<ii>::iterator iter;
-
-#define print_list(x) for(it = (x).begin(); it != (x).end(); it++) {cout << *it << " ";}
-#define print_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++) {cout << *it2 << " ";}
-#define search_list(x) for(it = (x).begin(); it != (x).end(); it++)
-#define search_vector(x) for(it2 = (x).begin(); it2 != (x).end(); it2++);
-#define pb(x) push_back(x)
-#define pf(x) push_front(x)
+typedef pair<LL, LL> ll; 																							   
+typedef map<string,int> msi;
+typedef set<int> sett;												   
+typedef vector<ii> vii; 		   
+typedef priority_queue< ii, vector<ii>, greater<ii> > pq;    																								   																				   
+vector<ii>::iterator iter;																							   
+																													   																				   										   
+#define pb push_back																							   
+#define pf push_front																							   
 #define mp(x, y) make_pair(x, y)
+#define size(x) (int)x.size()
+#define endl '\n'
+
+int _X[] = {0, 1, 1, 1, 0, -1, -1, -1};
+int _Y[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+int _X2[] = {1, 0, -1, 0};
+int _Y2[] = {0, 1, 0, -1};
+
+//FILE I/O
+void FILE_OI(){
+	fstream plik;
+	plik.open("plik.txt"); //create plik.txt!
+	plik << "_put here your input_";
+	plik.close();
+}
+
+//DEBUG
+void __print(int x) {cerr << x;}
+void __print(long x) {cerr << x;}
+void __print(long long x) {cerr << x;}
+void __print(unsigned x) {cerr << x;}
+void __print(unsigned long x) {cerr << x;}
+void __print(unsigned long long x) {cerr << x;}
+void __print(float x) {cerr << x;}
+void __print(double x) {cerr << x;}
+void __print(long double x) {cerr << x;}
+void __print(char x) {cerr << '\'' << x << '\'';}
+void __print(const char *x) {cerr << '\"' << x << '\"';}
+void __print(const string &x) {cerr << '\"' << x << '\"';}
+void __print(bool x) {cerr << (x ? "true" : "false");}
+
+template<typename T, typename V>
+void __print(const pair<T, V> &x) {cerr << '{'; __print(x.first); cerr << ','; __print(x.second); cerr << '}';}
+template<typename T>
+void __print(const T &x) {int f = 0; cerr << '{'; for (auto &i: x) cerr << (f++ ? "," : ""), __print(i); cerr << "}";}
+void _print() {cerr << "]\n";}
+template <typename T, typename... V>
+void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v...);}
+#ifndef ONLINE_JUDGE
+#define debug(x...) cerr << "[" << #x << "] = ["; _print(x)
+#else
+#define debug(x...)
+#endif      
+                                                              
 ///////////////////////////////////////////////GLOBAL DEFINITIONS////////////////////////////////////////////////////////
 
-
+int n, m;
+string s, p; //string | pattern
+int reset[1000005]; //pref_suf table
 
 ///////////////////////////////////////////////////FUNCTIONS/////////////////////////////////////////////////////////////
 
+void KMP_preprocess(){
+	int i = 0, j = -1;
+	fill(reset, reset+1000005, -1);
+	while(i < m){
+		while(j >= 0 && p[i] != p[j])
+			j = reset[j];
+		i++;
+		j++;
+		reset[i] = j;
+	}
+}
+
+void KMP_matching(){
+	int i = 0, j = 0;
+	while(i < n){
+		while(j >= 0 && s[i] != p[j])
+			j = reset[j];
+		i++;
+		j++;
+		if(j == m){
+			cout << "pattern found at: " << i - j << endl;
+			j = reset[j];
+		}
+	}
+}
 
 
 /////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
-int main(int argc, char* argv[])
-{ios_base::sync_with_stdio(false); cin.tie(NULL);
+int main(int argc, char* argv[])																					 
+{ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);                  												       
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    string s, p;
-    cout << "podaj wyraz: " << endl;
-    cin >> s;
-    cout << "podaj wzor: " << endl;
-    cin >> p;
-
-    int n = s.length();
-    int m = p.length();
-
-    int KMPNext[m+1];
-    int i, b;
-
-    KMPNext[0] = -1;
-    b = -1;
-
-    //Obliczanie  tablicy KMPNext;
-    for(i = 1; i <= m; i++)
-    {
-        while((b > -1) && (p[b] != p[i - 1]))
-        {
-            b = KMPNext[b];
-        }
-        ++b;
-        if((i == m) || (p[i] != p[b]))
-        {
-            KMPNext[i] = b;
-        }
-        else KMPNext[i] = KMPNext[b];
-    }
-
-    for(int i = 1; i <= m; i++)
-    {
-        cout << KMPNext[i] << " ";
-    }
-    cout << endl;
-
-    cout << s << endl;
-
-    int pp = 0;
-    b = 0;
-    for(int i = 0; i < n; i++)
-    {
-        while((b > -1) && (p[b] != s[i]))
-            b = KMPNext[b];
-
-        if(++b == m)
-        {
-            while(pp < i - b + 1)
-            {
-                cout << " ";
-                pp++;
-            }
-            cout << "^";
-            pp++;
-            b = KMPNext[b];
-        }
-    }
-    cout << endl;
-
+	/*
+	 * 	For better understanding:
+	 *  https://www.youtube.com/watch?v=7RRE-YEOjk8&fbclid=IwAR199gk6D9w7KDSgGYUHsKVBnKh3bHfeFuamWm7c7maHvtjA5H9mxqDh8Tw
+	 * 	https://www.youtube.com/watch?v=qpa-4KUfKUk&feature=youtu.be
+	 * 
+	 * */
+	 
+	cin >> n >> s >> m >> p;
+	KMP_preprocess();
+	KMP_matching();
+	
+	
+	
 	return 0;
 }
